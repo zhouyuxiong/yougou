@@ -4,7 +4,7 @@
   background-color: var(--themeColor)
 }
 
-navigator {
+.search_input navigator {
   background-color: #fff;
   height: 100%;
   border-radius: 14rpx;
