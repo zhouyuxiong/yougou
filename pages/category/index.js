@@ -36,6 +36,7 @@ Page({
           }
         }) */
         this.Cats = result
+        wx.setStorageSync('cates', { time: Date.now(), data: this.Cats });
         let leftMenuList = this.Cats.map((v, i) => ({
           cat_name: v.cat_name,
           cat_id: v.cat_id
@@ -49,7 +50,25 @@ Page({
   },
   //options(Object)
   onLoad: function (options) {
-    this.getCategoryList()
+    let cates = wx.getStorageSync("cates");
+    if (!cates) {
+      this.getCategoryList()
+    } else {
+      if (Date.now() - cates.time >= 10000) {
+        this.getCategoryList()
+      } else {
+        this.Cats = cates.data
+        let leftMenuList = this.Cats.map((v, i) => ({
+          cat_name: v.cat_name,
+          cat_id: v.cat_id
+        }))
+        let rightGoodsList = this.Cats[0].children
+        this.setData({
+          leftMenuList,
+          rightGoodsList
+        })
+      }
+    }
   },
   onReady: function () {
 
