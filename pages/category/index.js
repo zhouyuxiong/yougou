@@ -1,5 +1,7 @@
 //Page Object
 import { request } from '../../request/index'
+// 支持es7语法
+import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
   data: {
     // 左侧的菜单数组
@@ -25,16 +27,17 @@ Page({
     // console.log(this.data.currentIndex);
   },
   // 获取分类数据
-  getCategoryList() {
-    request({ url: '/categories' })
+  // async 通过异步发送请求
+  async getCategoryList() {
+    /* request({ url: '/categories' })
       .then(result => {
         // console.log(result);
-        /* let leftMenuList = result.map((v, i) => {
-          return {
-            cat_name: v.cat_name,
-            cat_id: v.cat_id
-          }
-        }) */
+        // let leftMenuList = result.map((v, i) => {
+        //   return {
+        //     cat_name: v.cat_name,
+        //     cat_id: v.cat_id
+        //   }
+        // })
         this.Cats = result
         wx.setStorageSync('cates', { time: Date.now(), data: this.Cats });
         let leftMenuList = this.Cats.map((v, i) => ({
@@ -46,7 +49,20 @@ Page({
           leftMenuList,
           rightGoodsList
         })
-      })
+      }) */
+
+    const result = await request({ url: '/categories' })
+    this.Cats = result
+    wx.setStorageSync('cates', { time: Date.now(), data: this.Cats });
+    let leftMenuList = this.Cats.map((v, i) => ({
+      cat_name: v.cat_name,
+      cat_id: v.cat_id
+    }))
+    let rightGoodsList = this.Cats[0].children
+    this.setData({
+      leftMenuList,
+      rightGoodsList
+    })
   },
   //options(Object)
   onLoad: function (options) {

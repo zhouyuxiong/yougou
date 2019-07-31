@@ -1,5 +1,6 @@
 // pages/goods_list/index.js
 import { request } from "../../request/index.js";
+import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
 
   /**
@@ -38,14 +39,19 @@ Page({
   },
 
   // 获取商品列表数据
-  getGoodsList() {
-    request({ url: '/goods/search', data: this.QueryParams })
+  async getGoodsList() {
+    /* request({ url: '/goods/search', data: this.QueryParams })
       .then(res => {
         // console.log(res);
         this.TotalPages = Math.ceil(res.total / this.QueryParams.pagesize)
         this.setData({ goodsList: [...this.data.goodsList, ...res.goods] })
         wx.stopPullDownRefresh()
-      })
+      }) */
+
+    const res = await request({ url: '/goods/search', data: this.QueryParams })
+    this.TotalPages = Math.ceil(res.total / this.QueryParams.pagesize)
+    this.setData({ goodsList: [...this.data.goodsList, ...res.goods] })
+    wx.stopPullDownRefresh()
   },
 
   /**
