@@ -1,4 +1,7 @@
 // pages/cart/index.js
+import { getSetting, openSetting, chooseAddress } from '../../utils/asyncWx'
+
+import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
 
   /**
@@ -6,6 +9,45 @@ Page({
    */
   data: {
 
+  },
+
+  // 获取收获地址
+  /* handleChooseAddress() {
+    wx.getSetting({
+      success(res1) {
+        const scopeAddress = res1.authSetting['scope.address']
+        if (scopeAddress === true || scopeAddress === undefined) {
+          wx.chooseAddress({
+            success: (res2) => {
+              console.log(res2);
+            }
+          })
+        } else {
+          wx.openSetting({
+            success: (res) => {
+              wx.chooseAddress({
+                success: (res2) => {
+                  console.log(res2);
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  }, */
+
+  async handleChooseAddress() {
+    const res1 = await getSetting()
+    const scopeAddress = res1.authSetting['scope.address']
+    if (scopeAddress === true || scopeAddress === undefined) {
+      const res2 = await chooseAddress()
+      console.log(res2);
+    } else {
+      await openSetting()
+      const res2 = await chooseAddress()
+      console.log(res2);
+    }
   },
 
   /**
