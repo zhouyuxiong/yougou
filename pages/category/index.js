@@ -2,6 +2,8 @@
 import { request } from '../../request/index'
 // 支持es7语法
 import regeneratorRuntime from '../../lib/runtime/runtime';
+
+import { getStorageSync, setStorageSync } from '../../utils/storage'
 Page({
   data: {
     // 左侧的菜单数组
@@ -53,7 +55,7 @@ Page({
 
     const result = await request({ url: '/categories' })
     this.Cats = result
-    wx.setStorageSync('cates', { time: Date.now(), data: this.Cats });
+    setStorageSync({ time: Date.now(), data: this.Cats });
     let leftMenuList = this.Cats.map((v, i) => ({
       cat_name: v.cat_name,
       cat_id: v.cat_id
@@ -66,7 +68,7 @@ Page({
   },
   //options(Object)
   onLoad: function (options) {
-    let cates = wx.getStorageSync("cates");
+    let cates = getStorageSync()
     if (!cates) {
       this.getCategoryList()
     } else {
