@@ -45,3 +45,22 @@ export const openSetting = () => {
     })
   })
 }
+
+/**
+ * 删除提示框
+ * @param {Object} param0 
+ */
+export const showModal = ({ content }) => {
+  return new Promise((reslove, reject) => {
+    wx.showModal({
+      title: '提示',
+      content: content,
+      success: (res) => {
+        reslove(res)
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}

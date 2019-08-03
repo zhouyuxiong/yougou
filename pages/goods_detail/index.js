@@ -31,6 +31,7 @@ Page({
     if (!cart[this.GoodsInfo.goods_id]) {
       cart[this.GoodsInfo.goods_id] = this.GoodsInfo
       cart[this.GoodsInfo.goods_id].num = 1
+      cart[this.GoodsInfo.goods_id].checked = true;
     } else {
       cart[this.GoodsInfo.goods_id].num++
     }
