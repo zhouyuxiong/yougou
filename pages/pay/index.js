@@ -56,7 +56,14 @@ Page({
 
   // 支付
   handleOrderPay() {
-
+    const token = wx.getStorageSync('token');
+    if (!token) {
+      wx.navigateTo({
+        url: '/pages/auth/index',
+      })
+    } else {
+      console.log('有token');
+    }
   },
 
   /**

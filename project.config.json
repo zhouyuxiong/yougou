@@ -14,7 +14,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.7",
-	"appid": "wxf21c5162d7e80ab1",
+	"appid": "wxfb52f2d7b2f6123a",
 	"projectname": "%E4%BC%98%E8%B4%AD",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -68,6 +68,12 @@
 					"name": "pages/cart/index",
 					"pathName": "pages/cart/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "授权",
+					"pathName": "pages/auth/index",
 					"scene": null
 				}
 			]

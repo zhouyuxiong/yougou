@@ -1,10 +1,36 @@
-// pages/auth/index.js
+import { request } from "../../request/index.js";
+import { wxLogin } from '../../utils/asyncWx'
+import { setStorageToken } from '../../utils/storage'
+import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    code: ''
+  },
+
+  // 获取用户
+  async getUserInfo(e) {
+    try {
+      const { signature, iv, rawData, encryptedData } = e.detail;
+
+      const { code } = (await wxLogin());
+
+      let postParams = { signature, iv, rawData, encryptedData, code }
+      const { token } = (await request({ url: "/users/wxlogin", method: "post", data: postParams }));
+
+      // console.log(token);
+      setStorageToken(token)
+
+      wx.navigateBack({
+        delta: 1
+      })
+    } catch (error) {
+      console.log(error);
+    }
+
 
   },
 

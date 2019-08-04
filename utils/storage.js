@@ -27,3 +27,11 @@ export const getStorageCart = () => {
 export const setStorageCart = (obj) => {
   wx.setStorageSync('cart', obj);
 }
+
+/**
+ * 设置token
+ * @param {string} token 
+ */
+export const setStorageToken = (token) => {
+  wx.setStorageSync('token', token);
+}
