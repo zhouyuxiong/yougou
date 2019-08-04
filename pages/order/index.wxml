@@ -1,2 +1,23 @@
-<!--pages/order/index.wxml-->
-<text>pages/order/index.wxml</text>
+<Tabs tabs="{{tabs}}" binditemchange='handleTitleChange'>
+  <block wx:if='{{tabs[0].isActive}}'>
+    <view class="frist_tab">
+      <view class="order_item" wx:for='{{orderList}}' wx:key="order_id">
+        <view class="order_row">
+          <text class="order_no_text">订单编号</text>
+          <text class="order_no_value">{{item.order_number}}</text>
+        </view>
+        <view class="order_row">
+          <text class="order_price_text">订单价格</text>
+          <text class="order_price_value">￥{{item.order_price}}</text>
+        </view>
+        <view class="order_row">
+          <text class="order_time_text">订单日期</text>
+          <text class="order_time_value">{{item.create_time}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:if='{{tabs[1].isActive}}'>1</block>
+  <block wx:if='{{tabs[2].isActive}}'>2</block>
+
+</Tabs>
