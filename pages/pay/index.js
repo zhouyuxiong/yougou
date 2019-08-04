@@ -1,6 +1,6 @@
 // pages/cart/index.js
-import { getSetting, openSetting, chooseAddress, showModal } from '../../utils/asyncWx'
-
+import { getStorageToken } from '../../utils/storage'
+import { request } from '../../request/index'
 import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
 
@@ -55,15 +55,39 @@ Page({
   },
 
   // 支付
-  handleOrderPay() {
-    const token = wx.getStorageSync('token');
+  async handleOrderPay() {
+    const token = getStorageToken();
     if (!token) {
       wx.navigateTo({
         url: '/pages/auth/index',
       })
-    } else {
-      console.log('有token');
+      return;
     }
+
+    const header = { Authorization: token }
+    let cartArr = Object.values(this.data.cart)
+
+    // 封装请求体
+    const createOrderParams = () => {
+      let order_price = this.data.totalPrice;
+      let consignee_addr = this.data.address.all;
+      let goods = [];
+
+      cartArr.forEach(v => {
+        if (v.checked) {
+          goods.push({
+            goods_id: v.goods_id,
+            goods_number: v.num,
+            goods_price: v.goods_price
+          })
+        }
+      })
+
+      return { order_price, consignee_addr, goods }
+    }
+
+    const { order_number } = await request({ url: '/my/orders/create', method: 'post', data: createOrderParams(), header })
+    console.log(order_number);
   },
 
   /**
