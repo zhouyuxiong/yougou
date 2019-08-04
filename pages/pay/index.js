@@ -66,7 +66,7 @@ Page({
         return;
       }
 
-      const header = { Authorization: token }
+      // const header = { Authorization: token }
       let cartArr = Object.values(this.data.cart)
 
       // 封装请求体
@@ -88,9 +88,9 @@ Page({
         return { order_price, consignee_addr, goods }
       }
 
-      const { order_number } = await request({ url: '/my/orders/create', method: 'post', data: createOrderParams(), header })
+      const { order_number } = await request({ url: '/my/orders/create', method: 'post', data: createOrderParams() })
       // console.log(order_number);
-      const { pay } = await request({ url: '/my/orders/req_unifiedorder', method: 'post', data: { order_number }, header })
+      const { pay } = await request({ url: '/my/orders/req_unifiedorder', method: 'post', data: { order_number } })
       // console.log(pay);
       const res = await requestPayment(pay)
       // console.log(res);
